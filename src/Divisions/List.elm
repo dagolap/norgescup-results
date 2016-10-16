@@ -1,6 +1,7 @@
 module Divisions.List exposing(..)
 
 import Html exposing (..)
+import Html.Attributes exposing (..)
 import Divisions.Models exposing (Division)
 import Archers.Models exposing (Archer)
 import Divisions.Messages exposing (..)
@@ -15,23 +16,14 @@ view divisions =
 
 divisionList : List Division -> Html Msg
 divisionList divisions =
-  table [] [
-    thead [] [
-      tr [] [
-        th [] [ text "name" ],
-        th [] [ text "archers" ]
-        ]
-      ],
-      tbody [] (List.map divisionRow divisions)
+  div [ class "row" ] [
+      div [ class "col-md-12" ] (List.map divisionRow divisions)
     ]
 divisionRow : Division -> Html Msg
 divisionRow division =
-  tr[] [
-    -- td [] [ text (toString division.name) ],
-    td [] [ text division.division ],
-    td [] [
-      ul[] (List.map archerItem division.archers)
-      ]
+  div[ class "archers" ] [
+    h1 [] [ text division.division ],
+    ul[] (List.map archerItem division.archers)
     ]
 
 archerItem : Archer -> Html Msg
