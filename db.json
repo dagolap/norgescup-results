@@ -33,6 +33,49 @@
               "location": "Tustna",
               "date": "2016-10-15",
               "result": 552
+            },
+            {
+              "competition_id": "2016089",
+              "location": "Lolistan",
+              "date": "2016-10-15",
+              "result": 552
+            },
+            {
+              "competition_id": "2016089",
+              "location": "Lolistan",
+              "date": "2016-10-15",
+              "result": 552
+            }
+          ]
+        },
+        {
+          "name": "Jon Terje Tvergrov Kalvatn",
+          "club" : "TSGE",
+          "total": 10,
+          "individual_results": [
+            {
+              "competition_id": "2016089",
+              "location": "Tustna",
+              "date": "2016-10-15",
+              "result": 552
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "division": "Barebow",
+      "archers": [
+        {
+          "name": "Dag Olav Prestegarden",
+          "club" : "Sverresborg",
+          "total": 1650,
+          "individual_results": [
+            {
+              "competition_id": "2016089",
+              "location": "Tustna",
+              "date": "2016-10-15",
+              "result": 552
             }
           ]
         },

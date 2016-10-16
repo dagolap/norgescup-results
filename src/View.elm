@@ -2,6 +2,7 @@ module View exposing (..)
 
 
 import Html exposing (..)
+import Html.Attributes exposing (class)
 import Html.App
 
 import Messages exposing (Msg(..))
@@ -13,7 +14,8 @@ import Models exposing (Model)
 
 view : Model -> Html Msg
 view model =
-  div [] [
+  div [ class "container-fluid" ] [
+    h1 [] [ text "Resultatliste NorgesCup 2016/2017" ],
     page model
   ]
 page : Model -> Html Msg
