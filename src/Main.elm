@@ -5,10 +5,11 @@ import View exposing (view)
 import Update exposing (update)
 import Models exposing (Model, initialModel)
 import Messages exposing (Msg(..))
+import Divisions.Commands exposing (getAllDivisions)
 
 init : (Model, Cmd Msg)
 init =
-  (initialModel, Cmd.none)
+  (initialModel, Cmd.map DivisionMsg getAllDivisions)
 
 subscriptions : Model -> Sub Msg
 subscriptions model =

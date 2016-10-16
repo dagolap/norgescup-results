@@ -1,4 +1,6 @@
 module Messages exposing (..)
 
-type Msg =
-  NoOp
+import Divisions.Messages
+
+type Msg
+  = DivisionMsg Divisions.Messages.Msg
