@@ -56,5 +56,10 @@ def get_scoreboard():
 
     return jsonify(returnable_results)
 
+@app.after_request
+def apply_caching(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    return response
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=False)
