@@ -12,8 +12,8 @@ import Divisions.Messages exposing (..)
 
 getDivisionsAPIUrl : String
 getDivisionsAPIUrl =
-  -- "http://localhost:4000/divisions"
-  "http://norgescup.bueskyting.no:5000/api/scoreboard"
+  "http://localhost:4000/divisions"
+  -- "http://norgescup.bueskyting.no:5000/api/scoreboard"
 
 
 getAllDivisions : Cmd Msg
@@ -30,9 +30,10 @@ divisionDecoder =
 
 archerDecoder : Decode.Decoder Archer
 archerDecoder =
-  Decode.object3 Archer
+  Decode.object4 Archer
     ("name" := Decode.string)
     ("total" := Decode.int)
+    ("club" := Decode.string)
     ("individual_results" := resultListDecoder)
 
 resultDecoder : Decode.Decoder Results.Models.Result

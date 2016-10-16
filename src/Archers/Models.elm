@@ -6,5 +6,6 @@ type alias Archer =
   {
     name : String,
     totalPoints : Int,
+    club : String,
     individualResults : List Results.Models.Result
   }

@@ -5,47 +5,7 @@
       "archers": [
         {
           "name": "Dag Olav Prestegarden",
-          "total": 1650,
-          "individual_results": [
-            {
-              "competition_id": "2016089",
-              "location": "Tustna",
-              "date": "2016-10-15",
-              "result": 552
-            }
-          ]
-        },
-        {
-          "name": "Jon Terje",
-          "total": 1650,
-          "individual_results": [
-            {
-              "competition_id": "2016089",
-              "location": "Tustna",
-              "date": "2016-10-15",
-              "result": 552
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "division": "compound 1",
-      "archers": [
-        {
-          "name": "Dag Olav Prestegarden",
-          "total": 1650,
-          "individual_results": [
-            {
-              "competition_id": "2016089",
-              "location": "Tustna",
-              "date": "2016-10-15",
-              "result": 552
-            }
-          ]
-        },
-        {
-          "name": "Jon Terje",
+          "club" : "Sverresborg",
           "total": 1650,
           "individual_results": [
             {
