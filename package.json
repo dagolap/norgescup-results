@@ -12,5 +12,8 @@
   },
   "author": "",
   "license": "WTFPL",
-  "homepage": "https://bitbucket.org/kalvatn/archery-results#readme"
+  "homepage": "https://bitbucket.org/kalvatn/archery-results#readme",
+  "dependencies": {
+    "json-server": "^0.8.22"
+  }
 }

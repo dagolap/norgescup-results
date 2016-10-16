@@ -1,0 +1,21 @@
+{
+  "divisions": [
+    {
+      "division": "recurve",
+      "archers": [
+        {
+          "name": "Dag Olav Prestegarden",
+          "total": 1650,
+          "individual_results": [
+            {
+              "competition_id": "2016089",
+              "location": "Tustna",
+              "date": "2016-10-15",
+              "result": 552
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
