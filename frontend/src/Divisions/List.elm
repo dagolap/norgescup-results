@@ -29,7 +29,7 @@ divisionRow : Division -> Html Msg
 divisionRow division =
   div[ class "col-xs-12 col-md-6 col-lg-3" ] [
     h1 [] [ text division.division ],
-    ol [] (List.map (\a -> archerItem division.division a) division.archers)
+    ol [] (List.map (\a -> archerItem division.division a) (List.reverse (List.sortBy .totalPoints division.archers)))
     ]
 
 archerItem : String -> Archer -> Html Msg
