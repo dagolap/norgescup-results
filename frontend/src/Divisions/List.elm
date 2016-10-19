@@ -27,31 +27,42 @@ divisionList divisions =
 
 divisionRow : Division -> Html Msg
 divisionRow division =
-  div[ class "col-xs-12 col-md-6 col-lg-3" ] [
-    h1 [] [ text division.division ],
-    ol [] (List.map (\a -> archerItem division.division a) (List.reverse (List.sortBy .totalPoints division.archers)))
-    ]
+  div [ class "col-xs-12 col-md-6 col-lg-4" ] [
+    h1 [ class "text-center" ] [ text division.division ],
+    div [ id ((sanitize division.division) ++ "-" ++ "accordion"), class "panel-group" ] (List.map (\a -> archerItem division.division a) (List.reverse (List.sortBy .totalPoints division.archers)))
+  ]
 
 archerItem : String -> Archer -> Html Msg
 archerItem divisionName archer =
   let
     collapseId = "collapse-" ++ (sanitize divisionName) ++ "-" ++ (sanitize archer.name)
   in
-    li[] [
-      div [ class "archer" ] [
-        a [ attribute "data-toggle" "collapse", attribute "data-target" ("#" ++ collapseId) ] [ text(archer.name ++ " " ++ toString(archer.totalPoints)) ],
-        div [ id collapseId, class "collapse" ] [
-          ul [ class "list-inline" ] (List.map resultItem archer.results)
+    div [ class "panel panel-default" ] [
+      div [ class "panel-heading" ] [
+        h4 [ class "panel-title" ] [
+          a [ href ("#" ++ collapseId), attribute "data-toggle" "collapse", attribute "data-parent" ("#" ++ (sanitize divisionName) ++ "-accordion") ] [
+            span [ ] [ text archer.name ],
+            span [ class "pull-right" ] [ text (toString archer.totalPoints) ]
+          ]
         ]
+      ],
+      div [ id collapseId, class "panel-collapse collapse" ] [
+        div [ class "panel-body" ] (List.map resultItem archer.results)
       ]
     ]
 
 resultItem : Results.Models.Result -> Html Msg
 resultItem result =
-  li[] [
-    div [ class "archer-result-list-item" ] [
-      h4 [] [ text result.location ],
-      h4 [] [ text result.date ],
-      h4 [] [ text(toString result.points) ]
+  div [ class "col-xs-12 col-md-6 col-lg-4" ] [
+    div [ class "panel panel-default" ] [
+      div [ class "panel-heading" ] [
+        h6 [ class "text-center panel-title" ] [
+          text result.date
+        ]
+      ],
+      div [ class "panel-body" ] [
+        span [] [ text result.location ],
+        span [ class "pull-right" ] [ text(toString result.points) ]
+      ]
     ]
   ]

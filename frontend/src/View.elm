@@ -15,7 +15,7 @@ import Models exposing (Model)
 view : Model -> Html Msg
 view model =
   div [ class "container-fluid" ] [
-    h1 [] [ text "Resultatliste NorgesCup 2016/2017" ],
+    h1 [ class "text-center" ] [ text "Resultatliste NorgesCup 2016/2017" ],
     page model
   ]
 page : Model -> Html Msg
