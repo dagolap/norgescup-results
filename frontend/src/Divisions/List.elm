@@ -3,12 +3,19 @@ module Divisions.List exposing(..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 
+import String exposing (words, toLower, join)
+
 
 import Divisions.Messages exposing (..)
 
 import Divisions.Models exposing (Division)
 import Archers.Models exposing (Archer)
 import Results.Models exposing (Result)
+
+
+sanitize : String -> String
+sanitize str =
+  join "-" (List.map toLower (words str))
 
 view : List Division -> Html Msg
 view divisions =
@@ -22,24 +29,29 @@ divisionRow : Division -> Html Msg
 divisionRow division =
   div[ class "col-xs-12 col-md-6 col-lg-3" ] [
     h1 [] [ text division.division ],
-    ul[] (List.map archerItem division.archers)
+    ol [] (List.map (\a -> archerItem division.division a) division.archers)
     ]
 
-archerItem : Archer -> Html Msg
-archerItem archer =
-  li[] [
-    div [ class "archer" ] [
-      h3 [] [ text archer.name ],
-      ul [ class "archer-result-list" ] (List.map resultItem archer.results)
+archerItem : String -> Archer -> Html Msg
+archerItem divisionName archer =
+  let
+    collapseId = "collapse-" ++ (sanitize divisionName) ++ "-" ++ (sanitize archer.name)
+  in
+    li[] [
+      div [ class "archer" ] [
+        a [ attribute "data-toggle" "collapse", attribute "data-target" ("#" ++ collapseId) ] [ text(archer.name ++ " " ++ toString(archer.totalPoints)) ],
+        div [ id collapseId, class "collapse" ] [
+          ul [ class "list-inline" ] (List.map resultItem archer.results)
+        ]
       ]
     ]
 
 resultItem : Results.Models.Result -> Html Msg
 resultItem result =
-  li [] [
+  li[] [
     div [ class "archer-result-list-item" ] [
       h4 [] [ text result.location ],
       h4 [] [ text result.date ],
       h4 [] [ text(toString result.points) ]
-      ]
     ]
+  ]
