@@ -27,7 +27,7 @@ divisionList divisions =
 
 divisionRow : Division -> Html Msg
 divisionRow division =
-  div [ class "col-xs-12 col-md-6 col-lg-4" , style [ ("min-height", "660px") ]] [
+  div [ class "col-xs-12 col-md-6 col-lg-4" , style [ ("min-height", "700px") ]] [
     h1 [ class "text-center" ] [ text division.division ],
     div [ id ((sanitize division.division) ++ "-" ++ "accordion"), class "panel-group" ] (List.map (\a -> archerItem division.division a) (List.reverse (List.sortBy .totalPoints division.archers)))
   ]
@@ -53,7 +53,7 @@ archerItem divisionName archer =
 
 resultItem : Results.Models.Result -> Html Msg
 resultItem result =
-  div [ class "col-xs-12 col-md-6 col-lg-4" ] [
+  div [ class "col-xs-12 col-md-4 col-lg-4" ] [
     div [ class "panel panel-default" ] [
       div [ class "panel-heading" ] [
         h6 [ class "text-center panel-title" ] [
