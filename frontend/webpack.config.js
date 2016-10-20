@@ -11,9 +11,11 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var TARGET_ENV = process.env.npm_lifecycle_event === 'build' ? 'production' : 'development';
 
+console.log("TARGET_ENV : " + TARGET_ENV);
+
 var common = {
   output: {
-    path: path.resolve(__dirname + 'dist/'),
+    path: path.resolve(__dirname, 'dist/'),
     filename: '[hash].js'
   },
   resolve: {
@@ -24,7 +26,7 @@ var common = {
     noParse: /\.elm$/,
     loaders: [
     {
-      test: /\.(ttf|eot|svg|woff|woff2)$/,
+      test: /\.(jpe?g|png|gif|ttf|eot|svg|woff|woff2)$/,
       loader: 'file-loader'
     },
     ]
@@ -34,13 +36,13 @@ var common = {
       template: 'src/static/index.html',
       inject: 'body',
       filename: 'index.html'
-
     })
   ],
   postcss: [ autoprefixer( { browsers : ['last 2 versions'] } ) ]
 }
 
 if (TARGET_ENV === 'development') {
+  console.log('development server');
   module.exports = merge(common, {
     entry: [
       'webpack-dev-server/client?http://0.0.0.0:3000',
@@ -75,7 +77,10 @@ if (TARGET_ENV === 'development') {
 }
 
 if (TARGET_ENV === 'production') {
+  console.log('building for production');
   module.exports = merge(common, {
+
+    entry: path.join(__dirname, 'src/static/index.js'),
     module: {
       loaders: [
       {
@@ -86,15 +91,16 @@ if (TARGET_ENV === 'production') {
       {
         test: /\.(css|scss)$/,
         loader: ExtractTextPlugin.extract('style-loader', [
-          'css-loader',
-          'postcss-loader',
-          'sass-loader'
+            'css-loader',
+            'postcss-loader',
+            'sass-loader'
         ])
       }
-      ],
+      ]
+    },
 
-      plugins: [
-        new CopyWebpackPlugin([
+    plugins: [
+      new CopyWebpackPlugin([
           {
             from: 'src/static/img',
             to: 'static/img'
@@ -102,19 +108,18 @@ if (TARGET_ENV === 'production') {
           {
             from: 'src/favicon.ico'
           }
-        ]),
-        new webpack.optimize.OccurenceOrderPlugin(),
+      ]),
+      new webpack.optimize.OccurenceOrderPlugin(),
 
-        new ExtractTextPlugin('./[hash].css', { allChunks : true }),
+      new ExtractTextPlugin('./[hash].css', { allChunks : true }),
 
-        new webpack.optimize.UglifyJsPlugin({
-          minimize: true,
-          compressor: { warnings: false },
-          //mangle: true
-        })
-      ]
+      new webpack.optimize.UglifyJsPlugin({
+        minimize: true,
+        compressor: { warnings: false },
+        //mangle: true
+      })
+    ]
 
-    }
   });
 }
 

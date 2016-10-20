@@ -29,7 +29,7 @@ body, html {
   }
 
   &.bg-img-target::after {
-    background-image: url("/static/img/bg_target.jpg");
+    background-image: url("../img/bg_target.jpg");
   }
 
 }

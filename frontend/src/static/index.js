@@ -1,7 +1,7 @@
 'use strict';
 
 global.$ = global.jQuery = require('jquery');
-require('bootstrap');
+require('bootstrap-sass');
 require('./styles/main.scss');
 
 
