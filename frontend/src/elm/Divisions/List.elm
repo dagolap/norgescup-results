@@ -27,8 +27,8 @@ divisionList divisions =
 
 divisionRow : Division -> Html Msg
 divisionRow division =
-  div [ class "col-xs-12 col-md-6 col-lg-4"] [
-    h1 [ class "text-center" ] [ text division.division ],
+  div [ class "col-xs-12 col-md-6 col-lg-4" ] [
+    h2 [ class "text-center" ] [ text division.division ],
     div [ id ((sanitize division.division) ++ "-" ++ "accordion"), class "panel-group" ] (List.map (\a -> archerItem division.division a) (List.reverse (List.sortBy .totalPoints division.archers)))
   ]
 
@@ -38,9 +38,12 @@ archerItem divisionName archer =
     collapseId = "collapse-" ++ (sanitize divisionName) ++ "-" ++ (sanitize archer.name)
   in
     div [ class "panel panel-default" ] [
-      div [ class "panel-heading" ] [
+      div [ class "panel-heading"
+          , attribute "data-toggle" "collapse"
+          , attribute "data-target" ("#" ++ collapseId)
+          , attribute "data-parent" ("#" ++ (sanitize divisionName) ++ "-accordion") ] [
         h4 [ class "panel-title" ] [
-          a [ href ("#" ++ collapseId), attribute "data-toggle" "collapse", attribute "data-parent" ("#" ++ (sanitize divisionName) ++ "-accordion") ] [
+          a [ href ("#" ++ collapseId) ] [
             span [ ] [ text archer.name ],
             span [ class "pull-right" ] [ text (toString archer.totalPoints) ]
           ]
