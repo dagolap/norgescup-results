@@ -1,55 +1,120 @@
 'use strict';
 
-var path = require("path");
+var path = require('path');
+var webpack = require('webpack');
+var merge = require('webpack-merge');
+var autoprefixer = require('autoprefixer');
 
-module.exports = {
-  entry: {
-    app: [
-      './src/index.js'
-    ]
-  },
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
+var TARGET_ENV = process.env.npm_lifecycle_event === 'build' ? 'production' : 'development';
+
+var common = {
   output: {
-    path: path.resolve(__dirname + '/dist'),
-    filename: '[name].js'
+    path: path.resolve(__dirname + 'dist/'),
+    filename: '[hash].js'
   },
-
+  resolve: {
+    modulesDirectories: ['node_modules'],
+    extensions : ['', '.js', '.elm']
+  },
   module: {
+    noParse: /\.elm$/,
     loaders: [
     {
-      test: /\.(css|scss)$/,
-      loaders: [
-        'style-loader',
-        'css-loader'
-      ]
-    },
-    {
-      test:    /\.html$/,
-      exclude: /node_modules/,
-      loader:  'file?name=[name].[ext]'
-    },
-    {
-      test:    /\.elm$/,
-      exclude: [/elm-stuff/, /node_modules/],
-      loader:  'elm-webpack'
-    },
-    {
-      test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'url-loader?limit=10000&mimetype=application/font-woff'
-    },
-    {
-      test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      test: /\.(ttf|eot|svg|woff|woff2)$/,
       loader: 'file-loader'
     },
+    ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'src/static/index.html',
+      inject: 'body',
+      filename: 'index.html'
+
+    })
+  ],
+  postcss: [ autoprefixer( { browsers : ['last 2 versions'] } ) ]
+}
+
+if (TARGET_ENV === 'development') {
+  module.exports = merge(common, {
+    entry: [
+      'webpack-dev-server/client?http://0.0.0.0:3000',
+      path.join(__dirname, 'src/static/index.js')
     ],
 
-    noParse: /\.elm$/
-  },
+    devServer: {
+      inline: true,
+      progress: true,
+      stats: { colors: true }
+    },
 
-  devServer: {
-    inline: true,
-    stats: { colors: true }
-  }
+    module: {
+      loaders: [
+      {
+        test: /\.elm$/,
+        exclude: [/elm-stuff/, /node_modules/],
+        loader: 'elm-hot!elm-webpack?verbose=true&warn=true'
+      },
+      {
+        test: /\.(css|scss)$/,
+        loaders: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'
+        ]
+      }
+      ]
+    }
+  });
+}
 
-};
+if (TARGET_ENV === 'production') {
+  module.exports = merge(common, {
+    module: {
+      loaders: [
+      {
+        test: /\.elm$/,
+        exclude: [/elm-stuff/, /node_modules/],
+        loader: 'elm-webpack'
+      },
+      {
+        test: /\.(css|scss)$/,
+        loader: ExtractTextPlugin.extract('style-loader', [
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'
+        ])
+      }
+      ],
+
+      plugins: [
+        new CopyWebpackPlugin([
+          {
+            from: 'src/static/img',
+            to: 'static/img'
+          },
+          {
+            from: 'src/favicon.ico'
+          }
+        ]),
+        new webpack.optimize.OccurenceOrderPlugin(),
+
+        new ExtractTextPlugin('./[hash].css', { allChunks : true }),
+
+        new webpack.optimize.UglifyJsPlugin({
+          minimize: true,
+          compressor: { warnings: false },
+          //mangle: true
+        })
+      ]
+
+    }
+  });
+}
 
