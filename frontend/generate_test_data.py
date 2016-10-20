@@ -24,7 +24,8 @@ def main():
   def create_archers():
     found = set()
     archer_list = []
-    while len(archer_list) < 10:
+    min_archers = random.randint(2, 10)
+    while len(archer_list) < min_archers:
       archer = random.choice(archers)
       if archer['id'] not in found:
         results = create_results()
