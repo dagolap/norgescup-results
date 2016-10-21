@@ -12,7 +12,7 @@ at = db.table('archers')
 rt = db.table('results')
 
 def get_archers():
-    return [a.get("id") for a in at.all()]
+    return [a.get("ianseo") for a in at.all()]
 
 def get_results(comp_number):
     if not comp_number: return None
@@ -45,6 +45,7 @@ def get_results(comp_number):
     })
 
     if (soup.find(text='Qualification rank')):
+        print("Found results for event %s - parsing..." % (comp_number))
         competition_code = soup.find(text="Competition Code").parent.parent.find("td").text
 
         results_tbody = soup.find(text='Qualification rank').parent.parent.parent
@@ -54,6 +55,7 @@ def get_results(comp_number):
         results = []
         for row in results_rows:
             if row.find(name='th', attrs={"colspan": 7}):
+                print("Setting category to: %s" % (row.find(name='th', attrs={"colspan": 7}).text))
                 category = row.find(name='th', attrs={"colspan": 7}).text
             elif category_map.get(category):
                 tds = row.findAll('td')
@@ -66,8 +68,12 @@ def get_results(comp_number):
                     "score": int(tds[3].text) if tds[3].text.isdigit() else 0
                     })
 
+        print("Found %d results total." % len(results))
             
         valid_archers = get_archers()
+        print("There are %d archers competing in Norgescupen" % (len(valid_archers)))
+        print(valid_archers)
+
         results = [r for r in results if r.get("archer_id") in valid_archers]
         
         if results:
