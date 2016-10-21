@@ -50,13 +50,13 @@ archerItem divisionName archer =
         ]
       ],
       div [ id collapseId, class "panel-collapse collapse" ] [
-        div [ class "panel-body" ] (List.map resultItem <| List.take 3 <| List.reverse <| List.sortBy .points archer.results)
+        div [ class "panel-body result-panel" ] (List.map resultItem <| List.take 3 <| List.reverse <| List.sortBy .points archer.results)
       ]
     ]
 
 resultItem : Results.Models.Result -> Html Msg
 resultItem result =
-  div [ class "col-xs-12 col-md-4 col-lg-4" ] [
+  div [ class "col-xs-12 col-md-4 col-lg-4 individual-result-box" ] [
     div [ class "panel panel-default" ] [
       div [ class "panel-heading" ] [
         h6 [ class "text-center panel-title" ] [
