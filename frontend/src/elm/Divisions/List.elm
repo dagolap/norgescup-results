@@ -28,8 +28,10 @@ divisionList divisions =
 divisionRow : Division -> Html Msg
 divisionRow division =
   div [ class "col-xs-12 col-md-6 col-lg-4" ] [
+    div [ class "division-box" ] [
     h2 [ class "text-center" ] [ text division.division ],
     div [ id ((sanitize division.division) ++ "-" ++ "accordion"), class "panel-group" ] (List.map (\a -> archerItem division.division a) (List.reverse (List.sortBy .totalPoints division.archers)))
+    ]
   ]
 
 archerItem : String -> Archer -> Html Msg

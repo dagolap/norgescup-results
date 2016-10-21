@@ -3,42 +3,33 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 @import 'autoclearfix.scss';
 
-body, html {
-  // background-color:#fff;
-  // opacity:0.9;
-  height: 100%;
+
+body { 
+  background: url("../img/bg_target.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
 }
-.background {
-  background-repeat: no-repeat;
-  // background-position: 50% 50%;
-  // background-position:50% 50%\9 !important;
-  &.parallax::after {
-    background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
 
-    content:"";
-    opacity:0.3;
-
-    position: absolute;
-    top: 0;
-    bottom:0;
-    right:0;
-    left:0;
-
-    z-index:-1;
-  }
-
-  &.bg-img-target::after {
-    background-image: url("../img/bg_target.jpg");
-  }
-
+body, html {
+  height: 100%;
 }
 
 .fullscreen {
   width:100%;
   height:100%;
   overflow:scroll;
+}
+
+.division-box {
+  background: rgba(238, 238, 238, 0.5);
+  margin: 10px 0 10px 0;
+  border-radius: 5px;
+  padding: 5px 5px 1px 5px;
+}
+
+.panel-group {
+  margin-bottom: 5px;
 }
 
 .result-panel {

@@ -14,7 +14,9 @@ import Models exposing (Model)
 view : Model -> Html Msg
 view model =
   div [ class "container-fluid" ] [
-    h1 [ class "text-center" ] [ text "Resultater Norgescup 2016-2017" ],
+    div [ class "jumbotron info-message" ] [
+      h1 [ class "text-center" ] [ text "Resultater Norgescup 2016-2017" ]
+    ],
     page model,
     div [ class "jumbotron info-message" ] [
       p [] [text "Resultatene på denne siden oppdateres automatisk samme dag som resultater fra de aktuelle stevnene legges ut på terminlisten." ],
