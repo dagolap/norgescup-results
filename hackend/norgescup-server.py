@@ -54,7 +54,7 @@ def get_scoreboard():
 
     db.close()
 
-    return jsonify(returnable_results)
+    return jsonify(returnable_results["divisions"])
 
 @app.after_request
 def apply_caching(response):
