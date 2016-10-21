@@ -4,6 +4,7 @@ from tinydb import TinyDB, Query
 from datetime import datetime
 import pprint
 import urllib2
+import re
 
 pp = pprint.PrettyPrinter(indent=4)
 db = TinyDB('db.json')
@@ -11,7 +12,7 @@ et = db.table('events')
 at = db.table('archers')
 rt = db.table('results')
 
-def get_archers():
+def get_ianseo_ids():
     return [a.get("ianseo") for a in at.all()]
 
 def get_results(comp_number):
@@ -63,14 +64,14 @@ def get_results(comp_number):
                     "event": competition_code,
                     "category": category_map.get(category),
                     "name": tds[1].text,
-                    "archer_id": tds[1].find('a').attrs.get("href")[-4:],
+                    "archer_id": re.search("Archer=(\d+)", tds[1].find('a').attrs.get("href")).group(1),
                     "club": tds[2].text[tds[2].text.index(" ") + 1:],
                     "score": int(tds[3].text) if tds[3].text.isdigit() else 0
                     })
 
         print("Found %d results total." % len(results))
             
-        valid_archers = get_archers()
+        valid_archers = get_ianseo_ids()
         print("There are %d archers competing in Norgescupen" % (len(valid_archers)))
         print(valid_archers)
 
