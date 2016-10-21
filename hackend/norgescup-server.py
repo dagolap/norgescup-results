@@ -29,7 +29,7 @@ def get_scoreboard():
             grouped_participants[p["division"]] = []
 
         grouped_participants[p["division"]].append({
-            "id": p["id"],
+            "id": p["ianseo"],
             "name": p["name"],
             "club": p["club"],
             "total": 0,
