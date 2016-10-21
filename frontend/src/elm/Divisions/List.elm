@@ -50,7 +50,7 @@ archerItem divisionName archer =
         ]
       ],
       div [ id collapseId, class "panel-collapse collapse" ] [
-        div [ class "panel-body" ] (List.map resultItem archer.results)
+        div [ class "panel-body" ] (List.map resultItem <| List.take 3 <| List.reverse <| List.sortBy .points archer.results)
       ]
     ]
 
