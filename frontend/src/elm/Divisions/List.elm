@@ -23,7 +23,7 @@ view divisions =
 
 divisionList : List Division -> Html Msg
 divisionList divisions =
-  div [ class "row auto-clear" ] (List.map divisionRow divisions)
+  div [ class "row auto-clear" ] (List.map divisionRow <| List.reverse <| List.sortBy (\x -> List.length x.archers) divisions)
 
 divisionRow : Division -> Html Msg
 divisionRow division =
