@@ -10,6 +10,7 @@ def get_scoreboard():
     db = TinyDB('db.json')
     rt = db.table('results')
     et = db.table('events')
+    at = db.table('archers')
 
     all_events_list = et.all()
     all_events = {}
@@ -17,10 +18,24 @@ def get_scoreboard():
         all_events[e["id"]] = e
     
 
-    returnable_results = { "divisions" : []}
+    intermediated_grouped_results = { "divisions" : []}
     results = rt.all()
     results.sort(key=lambda x: x.get("category"))
-    
+
+    grouped_participants = {}
+    for p in sorted(at.all(), key=lambda p: p["division"]):
+        print("Now grouping %s into %s" % (p, p["division"]))
+        if not p["division"] in grouped_participants.keys():
+            grouped_participants[p["division"]] = []
+
+        grouped_participants[p["division"]].append({
+            "id": p["id"],
+            "name": p["name"],
+            "club": p["club"],
+            "total": 0,
+            "individual_results": []
+        })
+
     for key, group in groupby(results, lambda x: x.get("category")):
         returnable_group = {
             "division": key,
@@ -47,14 +62,24 @@ def get_scoreboard():
                 })
             returnable_group["archers"].append(returnable_archer)
 
-        returnable_results.get("divisions").append(returnable_group)
+        intermediated_grouped_results.get("divisions").append(returnable_group)
 
+    # Add all missing divisions
+    returnable_results = intermediated_grouped_results["divisions"]
+    for division_name in ["Compound", "Recurve", "Barebow", "Langbue", "Instinktiv"]:
+        if not division_name in [x["division"] for x in returnable_results]:
+            returnable_results.append({"division": division_name, "archers": []})
 
+    # Add all missing archers
+    for group in returnable_results:
+        for unscored_archer in grouped_participants[group["division"]]:
+            if not unscored_archer["id"] in [x["id"] for x in group["archers"]]:
+                group["archers"].append(unscored_archer)
 
 
     db.close()
 
-    return jsonify(returnable_results["divisions"])
+    return jsonify(returnable_results)
 
 @app.after_request
 def apply_caching(response):
