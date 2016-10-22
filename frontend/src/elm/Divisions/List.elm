@@ -34,21 +34,28 @@ divisionRow division =
     ]
   ]
 
+getAttributes : Int -> String -> String -> List (Html.Attribute a)
+getAttributes points divisionName collapseId =
+  if points > 0 then
+    [ class "panel-heading clickable-panel"
+        , attribute "data-toggle" "collapse"
+        , attribute "data-target" ("#" ++ collapseId)
+        , attribute "data-parent" ("#" ++ (sanitize divisionName) ++ "-accordion")]
+  else
+    [ class "panel-heading" ]
+
+
 archerItem : String -> Archer -> Html Msg
 archerItem divisionName archer =
   let
     collapseId = "collapse-" ++ (sanitize divisionName) ++ "-" ++ (sanitize archer.name)
+    attributes = (getAttributes archer.totalPoints divisionName collapseId)
   in
     div [ class "panel panel-default" ] [
-      div [ class "panel-heading"
-          , attribute "data-toggle" "collapse"
-          , attribute "data-target" ("#" ++ collapseId)
-          , attribute "data-parent" ("#" ++ (sanitize divisionName) ++ "-accordion") ] [
+      div attributes [
         h4 [ class "panel-title" ] [
-          a [ href ("#" ++ collapseId) ] [
-            span [ ] [ text archer.name ],
-            span [ class "pull-right" ] [ text (toString archer.totalPoints) ]
-          ]
+          span [ ] [ text archer.name ],
+          span [ class "pull-right" ] [ text (toString archer.totalPoints) ]
         ]
       ],
       div [ id collapseId, class "panel-collapse collapse" ] [

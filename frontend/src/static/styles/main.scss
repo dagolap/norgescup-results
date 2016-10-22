@@ -4,8 +4,8 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import 'autoclearfix.scss';
 
 
-body { 
-  background: url("../img/bg_target.jpg") no-repeat center center fixed; 
+body {
+  background: url("../img/bg_target.jpg") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
@@ -42,4 +42,11 @@ body, html {
 
 .info-message {
   background-color: rgba(238, 238, 238, 0.5);
+}
+
+.clickable-panel:hover {
+  background-color:#d5d5d5;
+  cursor: pointer;
+  cursor: hand;
+
 }

@@ -12,8 +12,8 @@ import Divisions.Messages exposing (..)
 
 getDivisionsAPIUrl : String
 getDivisionsAPIUrl =
-  "http://localhost:4000/divisions"
-  -- "http://norgescup.bueskyting.no:5000/api/scoreboard"
+  -- "http://localhost:4000/divisions"
+  "https://norgescup.bueskyting.no/api/scoreboard"
 
 
 getAllDivisions : Cmd Msg
