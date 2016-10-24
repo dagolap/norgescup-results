@@ -44,8 +44,7 @@ def get_scoreboard():
         group_content = list(group)
         group_content.sort(key=lambda x: x.get("archer_id"))
         for archer_id, archer_group in groupby(group_content, lambda x: x.get("archer_id")):
-            archer_group_content = list(archer_group)
-            archer_group_content.sort(lambda x: int(x["score"]))
+            archer_group_content = sorted(list(archer_group), key=lambda x: int(x["score"]))
             returnable_archer = {
                 "id": archer_id,
                 "name": archer_group_content[0]["name"],
