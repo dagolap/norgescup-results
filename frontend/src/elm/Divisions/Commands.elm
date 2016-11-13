@@ -30,11 +30,12 @@ divisionDecoder =
 
 archerDecoder : Decode.Decoder Archer
 archerDecoder =
-  Decode.object4 Archer
+  Decode.object5 Archer
     ("name" := Decode.string)
     ("total" := Decode.int)
     ("club" := Decode.string)
     ("individual_results" := resultListDecoder)
+    ("id" := Decode.string)
 
 resultDecoder : Decode.Decoder Results.Models.Result
 resultDecoder =

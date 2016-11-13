@@ -48,7 +48,7 @@ getAttributes points divisionName collapseId =
 archerItem : String -> Archer -> Html Msg
 archerItem divisionName archer =
   let
-    collapseId = "collapse-" ++ (sanitize divisionName) ++ "-" ++ (sanitize archer.name)
+    collapseId = "collapse-" ++ archer.archer_id
     attributes = (getAttributes archer.totalPoints divisionName collapseId)
   in
     div [ class "panel panel-default" ] [
