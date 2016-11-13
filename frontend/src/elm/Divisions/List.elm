@@ -55,7 +55,10 @@ archerItem divisionName archer =
       div attributes [
         h4 [ class "panel-title" ] [
           span [ ] [ text archer.name ],
-          span [ class "pull-right" ] [ text (toString archer.totalPoints) ]
+          div [] [
+            span [ class "small" ] [ text archer.club ],
+            span [ class "pull-right" ] [ text (toString archer.totalPoints) ]
+          ]
         ]
       ],
       div [ id collapseId, class "panel-collapse collapse" ] [
@@ -65,16 +68,7 @@ archerItem divisionName archer =
 
 resultItem : Results.Models.Result -> Html Msg
 resultItem result =
-  div [ class "col-xs-12 col-md-4 col-lg-4 individual-result-box" ] [
-    div [ class "panel panel-default" ] [
-      div [ class "panel-heading" ] [
-        h6 [ class "text-center panel-title" ] [
-          text result.date
-        ]
-      ],
-      div [ class "panel-body" ] [
-        span [] [ text result.location ],
-        span [ class "pull-right" ] [ text(toString result.points) ]
-      ]
-    ]
+  div [ class "col-xs-12 individual-result-box" ] [
+      span [ class "small" ] [ text (result.date ++ " - " ++ result.location) ],
+      span [ class "pull-right small" ] [ text(toString result.points) ]
   ]
