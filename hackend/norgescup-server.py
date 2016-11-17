@@ -5,6 +5,7 @@ from itertools import groupby
 
 app = Flask(__name__)
 
+@app.route('/api/sb', methods=["GET"])
 @app.route('/api/scoreboard', methods=['GET'])
 def get_scoreboard():
     db = TinyDB('db.json')
